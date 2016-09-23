@@ -1,3 +1,4 @@
+ 
 
 /* Code for Assignment ?? 
  * Name:
@@ -33,8 +34,11 @@ public class Main{
         UI.addButton("Save path XY", this::save_xy);
         UI.addButton("Load path XY", this::load_xy);
         UI.addButton("Save path Ang", this::save_ang);
-        UI.addButton("Load path Ang:Play", this::load_ang);
-                
+        UI.addButton("Load path Ang:Play", this::load_ang);        
+        UI.addButton("Save path PWM", this::save_pwm);
+        UI.addButton("Load path PWM:Play", this::load_pwm);
+        UI.addButton("Send to pi", this::send_to_pi);
+        
        // UI.addButton("Quit", UI::quit);
         UI.setMouseMotionListener(this::doMouse);
         UI.setKeyListener(this::doKeys);
@@ -46,8 +50,27 @@ public class Main{
         this.drawing = new Drawing();
         this.run();
         arm.draw();
+        
     }
-    
+    public void send_to_pi() {
+        try {
+            ProcessBuilder builder = new ProcessBuilder("script","test","-c","scp output.txt pi@10.140.55.73:/home/pi/Arm");
+        Process p = builder.start();
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(p.getOutputStream())); 
+        Scanner s = new Scanner(p.getInputStream());
+        while (p.isAlive()) {
+            String s2 = s.next();
+            UI.println(s2);
+            if (s2.contains("password")) {
+                writer.write("pi\n");
+                writer.flush();
+            }
+        }
+    } catch (IOException ex) {
+        ex.printStackTrace();
+    }
+        
+    }
     public void doKeys(String action){
         UI.printf("Key :%s \n", action);
         if (action.equals("b")) {
@@ -153,6 +176,22 @@ public class Main{
     
     
     public void load_ang(){
+        
+    }
+    
+    // save pwm values into file
+    public void save_pwm(){
+        
+        tool_path = new ToolPath();
+        state = 0;
+        String fname = "output.txt";
+        if(tool_path == null) UI.println("TOOL IS NULL");
+        tool_path.convert_angles_to_pwm(drawing, arm, fname);
+        tool_path.save_pwm_file(fname);
+        
+    }
+    
+    public void load_pwm(){
         
     }
     

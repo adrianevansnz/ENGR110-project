@@ -1,3 +1,4 @@
+// package ToWebSite;
 
         // stores cartesian coordinates of the path points
     public class PointXY{
@@ -22,7 +23,7 @@
             return y;
         }
         public boolean get_pen(){
-            return pen_down;
+            return pen_down; // 2000 up
         }
         public void set_x(double xi){
             x = xi;

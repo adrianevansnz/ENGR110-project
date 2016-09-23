@@ -42,6 +42,7 @@ public class Arm
 
     private int pwm1;
     private int pwm2;
+    private int pwm3;
 
     private double xj1;     // positions of the joints
     private double yj1; 
@@ -273,14 +274,18 @@ public class Arm
     // for motor to be in position(angle) theta1
     // linear intepolation
     public int get_pwm1(){
-        int pwm = 0;
-        return pwm;
+        //int pwm = 0;
+        return pwm1;
     }
 
     // ditto for motor 2
     public int get_pwm2(){
-        int pwm =0;
+        //int pwm =0;
         //pwm = (int)(pwm2_90 + (theta2 - 90)*pwm2_slope);
-        return pwm;
+        return pwm2;
+    }
+    
+    public int get_pwm3(){
+        return pwm3;
     }
 }
