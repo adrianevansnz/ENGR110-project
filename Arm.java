@@ -173,8 +173,7 @@ public class Arm
         // distance between pem and motor
         double d1 = Math.sqrt(Math.pow(xt - xm1,2) + Math.pow(yt - ym1,2));
         double d2 = Math.sqrt(Math.pow(xt - xm2,2) + Math.pow(yt - ym2,2));      
-        
-        
+
         if (d1>2*r){
             //UI.println("Arm 1 - can not reach");
             valid_state = false;
@@ -202,18 +201,18 @@ public class Arm
 
         xj2 = xa2+(h2*Math.cos(alpha2));
         yj2 = ya2+(h2*Math.sin(alpha2));        
-        
+
         // distance between joints
         double d3 = Math.sqrt(Math.pow(xj2 - xj1,2) + Math.pow(yj2 - yj1,2));      
-        
-        if(d3 >= (2*r)*0.8){
+
+        if(d3 >= (2*r)*0.9){
             valid_state = false;
             return;
         }
-        if( d3 <= (2*r)*0.2 ){
-            valid_state = false;
-            return;
-        }
+        //         if( d3 <= (2*r)*0.2 ){
+        //             valid_state = false;
+        //             return;
+        //         }
 
         theta1 = (Math.atan2(yj1-ym1,xj1-xm1));
         if ((theta1>0)||(theta1<-Math.PI)){
@@ -262,7 +261,7 @@ public class Arm
     }
 
     public void pwmConvert1(double theta1){
-        pwm1=(int)(1500+((theta1-1.8675)*((1600-1500)/(2.04204-1.8675))));
+        pwm1=(int)(1410+((theta1-1.74533)*((1690-1410)/(2.19911-1.74533))));
 
     }
 
@@ -284,7 +283,7 @@ public class Arm
         //pwm = (int)(pwm2_90 + (theta2 - 90)*pwm2_slope);
         return pwm2;
     }
-    
+
     public int get_pwm3(){
         return pwm3;
     }

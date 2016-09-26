@@ -4,7 +4,7 @@
     public class PointXY{
         private double x;
         private double y;
-        private boolean pen_down; // position of the pen when arm moves
+        public boolean pen_down; // position of the pen when arm moves
                                   // toward this point
         public PointXY(){
         }

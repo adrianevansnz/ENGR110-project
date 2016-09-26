@@ -65,6 +65,7 @@ public class Drawing
             PointXY p0 = get_drawing_point(i-1);
             PointXY p1 = get_drawing_point(i); 
             if (path.get(i).get_pen()){
+                UI.setLineWidth(2);
                 UI.setColor(Color.BLUE); //pen down part
             } else {
                 UI.setColor(Color.LIGHT_GRAY); // pen uo

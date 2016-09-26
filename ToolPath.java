@@ -44,7 +44,7 @@ public class ToolPath
     public ToolPath()
     {
         // initialise instance variables
-        n_steps = 10;
+        n_steps = 30;
         theta1_vector = new ArrayList<Double>();
         theta2_vector = new ArrayList<Double>();
         pen_vector = new ArrayList<Integer>();
@@ -151,7 +151,7 @@ public class ToolPath
             String str_out;
             
             for (int i = 1; i < pwm1_vector.size() ; i++){
-                if(i==1 || i == pwm1_vector.size() - 1){
+                if(i==1 && i==2 || i == pwm1_vector.size() - 1){
                     str_out = String.format("%d,%d,%d\n",
                     pwm1_vector.get(i), pwm2_vector.get(i), 2000);
                 }
