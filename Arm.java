@@ -205,14 +205,14 @@ public class Arm
         // distance between joints
         double d3 = Math.sqrt(Math.pow(xj2 - xj1,2) + Math.pow(yj2 - yj1,2));      
 
-        if(d3 >= (2*r)*0.9){
+        if (d3 >= (2*r) * 0.9){
             valid_state = false;
             return;
         }
-        //         if( d3 <= (2*r)*0.2 ){
-        //             valid_state = false;
-        //             return;
-        //         }
+        //if (d3 <= (2*r) * 0.2){
+            //valid_state = false;
+            //return;
+        //}
 
         theta1 = (Math.atan2(yj1-ym1,xj1-xm1));
         if ((theta1>0)||(theta1<-Math.PI)){
@@ -261,7 +261,7 @@ public class Arm
     }
 
     public void pwmConvert1(double theta1){
-        pwm1=(int)(1410+((theta1-1.74533)*((1690-1410)/(2.19911-1.74533))));
+        pwm1=(int)(1410+((theta1-1.74533)*((1690-1410)/(2.191911-1.74533))));
 
     }
 

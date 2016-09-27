@@ -36,8 +36,10 @@ public class Main{
         UI.addButton("Save path PWM", this::save_pwm);
         UI.addButton("Load path PWM:Play", this::load_pwm);
         UI.addButton("Send to pi", this::send_to_pi);
-        UI.addButton("Pen up", ()->{penUp();});
-        UI.addButton("Pen down", ()->{penDown();});
+        UI.addButton("Pen up", ()->{state = 3;});
+        UI.addButton("Pen down", ()->{state = 2;});
+        UI.addButton("Do Square", this::drawSquare);
+        UI.addButton("Show snowman", ()->{drawing.changeShowSnowman();});
 
         // UI.addButton("Quit", UI::quit);
         UI.setMouseMotionListener(this::doMouse);
@@ -87,13 +89,13 @@ public class Main{
     }
 
     public void penUp(){
-        PointXY p0 = new PointXY();
-        p0.set_pen(false);
+        if(state == 2) state = 3;
+        if(state == 3) state = 2;
+        //state = 3;
     }
 
     public void penDown(){
-        PointXY p0 = new PointXY();
-        p0.set_pen(true);
+        state = 2;
     }
 
     public void doMouse(String action, double x, double y) {
@@ -120,16 +122,16 @@ public class Main{
             if ((state == 2)&&(drawing.get_path_size()>0)){
                 PointXY lp = new PointXY();
                 lp = drawing.get_path_last_point();
-                //if (lp.get_pen()){
-                UI.setColor(Color.GRAY);
-                UI.drawLine(lp.get_x(),lp.get_y(),x,y);
-                // }
+                if (lp.get_pen()){
+                    UI.setColor(Color.GRAY);
+                    UI.drawLine(lp.get_x(),lp.get_y(),x,y);
+                }
             }
             drawing.draw();
         }
 
         // add point
-        if (   (state == 2) &&(action.equals("clicked"))){
+        if ((state == 2) &&(action.equals("clicked"))){
             // add point(pen down) and draw
             UI.printf("Adding point x=%f y=%f\n",x,y);
             drawing.add_point_to_path(x,y,true); // add point with pen down
@@ -140,7 +142,7 @@ public class Main{
             drawing.print_path();
         }
 
-        if (   (state == 3) &&(action.equals("clicked"))){
+        if ((state == 3) &&(action.equals("clicked"))){
             // add point and draw
             //UI.printf("Adding point x=%f y=%f\n",x,y);
             drawing.add_point_to_path(x,y,false); // add point wit pen up
@@ -149,11 +151,47 @@ public class Main{
             arm.draw();
             drawing.draw();
             drawing.print_path();
-            state = 2;
+            //state = 2;
         }
 
+        if(state == 2 && (action.equals("dragged"))){            
+            drawing.add_point_to_path(x,y,true); // add point wit pen up
+
+            arm.inverseKinematic(x,y);
+            arm.draw();
+            drawing.draw();
+            drawing.print_path();
+        }
     }
-    
+
+    public void drawSquare(){        
+        drawing.add_point_to_path(270,90,true); // add point with pen down
+        arm.inverseKinematic(270, 90);
+        arm.draw();
+        drawing.draw();
+        drawing.print_path();
+        drawing.add_point_to_path(300,90,true); // add point with pen down
+        arm.inverseKinematic(300, 90);
+        arm.draw();
+        drawing.draw();
+        drawing.print_path();
+        drawing.add_point_to_path(300,110,true); // add point with pen down
+        arm.inverseKinematic(300,110);
+        arm.draw();
+        drawing.draw();
+        drawing.print_path();
+        drawing.add_point_to_path(270,110,true); // add point with pen down
+        arm.inverseKinematic(270,110);
+        arm.draw();
+        drawing.draw();
+        drawing.print_path();
+        drawing.add_point_to_path(270,90,true); // add point with pen down
+        arm.inverseKinematic(270,90);
+        arm.draw();
+        drawing.draw();
+        drawing.print_path();
+    }
+
     public void save_xy(){
         state = 0;
         String fname = UIFileChooser.save();

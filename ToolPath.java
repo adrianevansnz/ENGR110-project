@@ -44,7 +44,7 @@ public class ToolPath
     public ToolPath()
     {
         // initialise instance variables
-        n_steps = 30;
+        n_steps = 5;
         theta1_vector = new ArrayList<Double>();
         theta2_vector = new ArrayList<Double>();
         pen_vector = new ArrayList<Integer>();
